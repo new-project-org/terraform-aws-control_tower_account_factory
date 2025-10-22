@@ -48,90 +48,114 @@ resource "aws_subnet" "aft_vpc_private_subnet_02" {
   }
 }
 
-resource "aws_subnet" "aft_vpc_public_subnet_01" {
+resource "aws_subnet" "aft_vpc_private_subnet_03" {
   count             = var.aft_enable_vpc && var.aft_customer_vpc_id == null ? 1 : 0
   vpc_id            = aws_vpc.aft_vpc[0].id
-  cidr_block        = var.aft_vpc_public_subnet_01_cidr
-  availability_zone = element(data.aws_availability_zones.available.names, 0)
+  cidr_block        = var.aft_vpc_private_subnet_03_cidr
+  availability_zone = element(data.aws_availability_zones.available.names, 1)
   tags = {
-    Name = "aft-vpc-public-subnet-01"
+    Name = "aft-vpc-private-subnet-03"
   }
 }
 
-resource "aws_subnet" "aft_vpc_public_subnet_02" {
-  count             = var.aft_enable_vpc && var.aft_customer_vpc_id == null ? 1 : 0
-  vpc_id            = aws_vpc.aft_vpc[0].id
-  cidr_block        = var.aft_vpc_public_subnet_02_cidr
-  availability_zone = element(data.aws_availability_zones.available.names, 1)
-  tags = {
-    Name = "aft-vpc-public-subnet-02"
-  }
-}
+# resource "aws_subnet" "aft_vpc_public_subnet_01" {
+#   count             = var.aft_enable_vpc && var.aft_customer_vpc_id == null ? 1 : 0
+#   vpc_id            = aws_vpc.aft_vpc[0].id
+#   cidr_block        = var.aft_vpc_public_subnet_01_cidr
+#   availability_zone = element(data.aws_availability_zones.available.names, 0)
+#   tags = {
+#     Name = "aft-vpc-public-subnet-01"
+#   }
+# }
+
+# resource "aws_subnet" "aft_vpc_public_subnet_02" {
+#   count             = var.aft_enable_vpc && var.aft_customer_vpc_id == null ? 1 : 0
+#   vpc_id            = aws_vpc.aft_vpc[0].id
+#   cidr_block        = var.aft_vpc_public_subnet_02_cidr
+#   availability_zone = element(data.aws_availability_zones.available.names, 1)
+#   tags = {
+#     Name = "aft-vpc-public-subnet-02"
+#   }
+# }
 
 
 #########################################
 # Route Tables
 #########################################
 
-resource "aws_route_table" "aft_vpc_private_subnet_01" {
+# resource "aws_route_table" "aft_vpc_private_subnet_01" {
+#   count  = var.aft_enable_vpc && var.aft_customer_vpc_id == null ? 1 : 0
+#   vpc_id = aws_vpc.aft_vpc[0].id
+#   route {
+#     cidr_block     = "0.0.0.0/0"
+#     nat_gateway_id = aws_nat_gateway.aft-vpc-natgw-01[0].id
+#   }
+#   tags = {
+#     Name = "aft-vpc-private-subnet-01"
+#   }
+# }
+
+# resource "aws_route_table" "aft_vpc_private_subnet_02" {
+#   count  = var.aft_enable_vpc && var.aft_customer_vpc_id == null ? 1 : 0
+#   vpc_id = aws_vpc.aft_vpc[0].id
+#   route {
+#     cidr_block     = "0.0.0.0/0"
+#     nat_gateway_id = aws_nat_gateway.aft-vpc-natgw-02[0].id
+#   }
+#   tags = {
+#     Name = "aft-vpc-private-subnet-02"
+#   }
+# }
+resource "aws_route_table" "aft_vpc_private_subnet_rt" {
   count  = var.aft_enable_vpc && var.aft_customer_vpc_id == null ? 1 : 0
   vpc_id = aws_vpc.aft_vpc[0].id
-  route {
-    cidr_block     = "0.0.0.0/0"
-    nat_gateway_id = aws_nat_gateway.aft-vpc-natgw-01[0].id
-  }
   tags = {
-    Name = "aft-vpc-private-subnet-01"
+    Name = "rt-aft-vpc-private-subnet-01"
   }
 }
 
-resource "aws_route_table" "aft_vpc_private_subnet_02" {
-  count  = var.aft_enable_vpc && var.aft_customer_vpc_id == null ? 1 : 0
-  vpc_id = aws_vpc.aft_vpc[0].id
-  route {
-    cidr_block     = "0.0.0.0/0"
-    nat_gateway_id = aws_nat_gateway.aft-vpc-natgw-02[0].id
-  }
-  tags = {
-    Name = "aft-vpc-private-subnet-02"
-  }
-}
 
-resource "aws_route_table" "aft_vpc_public_subnet_01" {
-  count  = var.aft_enable_vpc && var.aft_customer_vpc_id == null ? 1 : 0
-  vpc_id = aws_vpc.aft_vpc[0].id
-  route {
-    cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.aft-vpc-igw[0].id
-  }
-  tags = {
-    Name = "aft-vpc-public-subnet-01"
-  }
-}
+# resource "aws_route_table" "aft_vpc_public_subnet_01" {
+#   count  = var.aft_enable_vpc && var.aft_customer_vpc_id == null ? 1 : 0
+#   vpc_id = aws_vpc.aft_vpc[0].id
+#   route {
+#     cidr_block = "0.0.0.0/0"
+#     gateway_id = aws_internet_gateway.aft-vpc-igw[0].id
+#   }
+#   tags = {
+#     Name = "aft-vpc-public-subnet-01"
+#   }
+# }
 
 resource "aws_route_table_association" "aft_vpc_private_subnet_01" {
   count          = var.aft_enable_vpc && var.aft_customer_vpc_id == null ? 1 : 0
   subnet_id      = aws_subnet.aft_vpc_private_subnet_01[0].id
-  route_table_id = aws_route_table.aft_vpc_private_subnet_01[0].id
+  route_table_id = aws_route_table.aft_vpc_private_subnet_rt[0].id
 }
 
 resource "aws_route_table_association" "aft_vpc_private_subnet_02" {
   count          = var.aft_enable_vpc && var.aft_customer_vpc_id == null ? 1 : 0
   subnet_id      = aws_subnet.aft_vpc_private_subnet_02[0].id
-  route_table_id = aws_route_table.aft_vpc_private_subnet_02[0].id
+  route_table_id = aws_route_table.aft_vpc_private_subnet_rt[0].id
 }
 
-resource "aws_route_table_association" "aft_vpc_public_subnet_01" {
+resource "aws_route_table_association" "aft_vpc_private_subnet_03" {
   count          = var.aft_enable_vpc && var.aft_customer_vpc_id == null ? 1 : 0
-  subnet_id      = aws_subnet.aft_vpc_public_subnet_01[0].id
-  route_table_id = aws_route_table.aft_vpc_public_subnet_01[0].id
+  subnet_id      = aws_subnet.aft_vpc_private_subnet_03[0].id
+  route_table_id = aws_route_table.aft_vpc_private_subnet_rt[0].id
 }
 
-resource "aws_route_table_association" "aft_vpc_public_subnet_02" {
-  count          = var.aft_enable_vpc && var.aft_customer_vpc_id == null ? 1 : 0
-  subnet_id      = aws_subnet.aft_vpc_public_subnet_02[0].id
-  route_table_id = aws_route_table.aft_vpc_public_subnet_01[0].id
-}
+# resource "aws_route_table_association" "aft_vpc_public_subnet_01" {
+#   count          = var.aft_enable_vpc && var.aft_customer_vpc_id == null ? 1 : 0
+#   subnet_id      = aws_subnet.aft_vpc_public_subnet_01[0].id
+#   route_table_id = aws_route_table.aft_vpc_public_subnet_01[0].id
+# }
+
+# resource "aws_route_table_association" "aft_vpc_public_subnet_02" {
+#   count          = var.aft_enable_vpc && var.aft_customer_vpc_id == null ? 1 : 0
+#   subnet_id      = aws_subnet.aft_vpc_public_subnet_02[0].id
+#   route_table_id = aws_route_table.aft_vpc_public_subnet_01[0].id
+# }
 
 
 #########################################
@@ -192,50 +216,50 @@ resource "aws_security_group" "aft_vpc_endpoint_sg" {
 # Internet & NAT GWs
 #########################################
 
-resource "aws_internet_gateway" "aft-vpc-igw" {
-  count  = var.aft_enable_vpc && var.aft_customer_vpc_id == null ? 1 : 0
-  vpc_id = aws_vpc.aft_vpc[0].id
+# resource "aws_internet_gateway" "aft-vpc-igw" {
+#   count  = var.aft_enable_vpc && var.aft_customer_vpc_id == null ? 1 : 0
+#   vpc_id = aws_vpc.aft_vpc[0].id
 
-  tags = {
-    Name = "aft-vpc-igw"
-  }
-}
+#   tags = {
+#     Name = "aft-vpc-igw"
+#   }
+# }
 
-resource "aws_eip" "aft-vpc-natgw-01" {
-  count  = var.aft_enable_vpc && var.aft_customer_vpc_id == null ? 1 : 0
-  domain = "vpc"
-}
+# resource "aws_eip" "aft-vpc-natgw-01" {
+#   count  = var.aft_enable_vpc && var.aft_customer_vpc_id == null ? 1 : 0
+#   domain = "vpc"
+# }
 
-resource "aws_eip" "aft-vpc-natgw-02" {
-  count  = var.aft_enable_vpc && var.aft_customer_vpc_id == null ? 1 : 0
-  domain = "vpc"
-}
+# resource "aws_eip" "aft-vpc-natgw-02" {
+#   count  = var.aft_enable_vpc && var.aft_customer_vpc_id == null ? 1 : 0
+#   domain = "vpc"
+# }
 
-resource "aws_nat_gateway" "aft-vpc-natgw-01" {
-  count      = var.aft_enable_vpc && var.aft_customer_vpc_id == null ? 1 : 0
-  depends_on = [aws_internet_gateway.aft-vpc-igw]
+# resource "aws_nat_gateway" "aft-vpc-natgw-01" {
+#   count      = var.aft_enable_vpc && var.aft_customer_vpc_id == null ? 1 : 0
+#   depends_on = [aws_internet_gateway.aft-vpc-igw]
 
-  allocation_id = aws_eip.aft-vpc-natgw-01[0].id
-  subnet_id     = aws_subnet.aft_vpc_public_subnet_01[0].id
+#   allocation_id = aws_eip.aft-vpc-natgw-01[0].id
+#   subnet_id     = aws_subnet.aft_vpc_public_subnet_01[0].id
 
-  tags = {
-    Name = "aft-vpc-natgw-01"
-  }
+#   tags = {
+#     Name = "aft-vpc-natgw-01"
+#   }
 
-}
+# }
 
-resource "aws_nat_gateway" "aft-vpc-natgw-02" {
-  count      = var.aft_enable_vpc && var.aft_customer_vpc_id == null ? 1 : 0
-  depends_on = [aws_internet_gateway.aft-vpc-igw]
+# resource "aws_nat_gateway" "aft-vpc-natgw-02" {
+#   count      = var.aft_enable_vpc && var.aft_customer_vpc_id == null ? 1 : 0
+#   depends_on = [aws_internet_gateway.aft-vpc-igw]
 
-  allocation_id = aws_eip.aft-vpc-natgw-02[0].id
-  subnet_id     = aws_subnet.aft_vpc_public_subnet_02[0].id
+#   allocation_id = aws_eip.aft-vpc-natgw-02[0].id
+#   subnet_id     = aws_subnet.aft_vpc_public_subnet_02[0].id
 
-  tags = {
-    Name = "aft-vpc-natgw-02"
-  }
+#   tags = {
+#     Name = "aft-vpc-natgw-02"
+#   }
 
-}
+# }
 
 #########################################
 # VPC Gateway Endpoints

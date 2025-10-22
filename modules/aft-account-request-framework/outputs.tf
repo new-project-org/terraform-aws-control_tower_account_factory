@@ -88,9 +88,9 @@ output "aft_vpc_id" {
   value = local.vpc_deployment ? local.vpc_id : null
 }
 
-output "aft_vpc_public_subnets" {
-  value = local.vpc_public_subnet_ids
-}
+# output "aft_vpc_public_subnets" {
+#   value = local.vpc_public_subnet_ids
+# }
 
 output "aft_vpc_private_subnets" {
   value = local.vpc_deployment ? local.vpc_private_subnet_ids : null

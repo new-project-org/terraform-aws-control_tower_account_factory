@@ -146,13 +146,18 @@ output "aft_vpc_private_subnet_02_cidr" {
   value = var.aft_vpc_private_subnet_02_cidr
 }
 
-output "aft_vpc_public_subnet_01_cidr" {
-  value = var.aft_vpc_public_subnet_01_cidr
+output "aft_vpc_private_subnet_03_cidr" {
+  value = var.aft_vpc_private_subnet_03_cidr
+  
 }
 
-output "aft_vpc_public_subnet_02_cidr" {
-  value = var.aft_vpc_public_subnet_02_cidr
-}
+# output "aft_vpc_public_subnet_01_cidr" {
+#   value = var.aft_vpc_public_subnet_01_cidr
+# }
+
+# output "aft_vpc_public_subnet_02_cidr" {
+#   value = var.aft_vpc_public_subnet_02_cidr
+# }
 
 
 #########################################

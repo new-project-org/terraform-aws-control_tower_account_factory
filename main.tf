@@ -51,8 +51,9 @@ module "aft_account_request_framework" {
   aft_vpc_cidr                                = var.aft_vpc_cidr
   aft_vpc_private_subnet_01_cidr              = var.aft_vpc_private_subnet_01_cidr
   aft_vpc_private_subnet_02_cidr              = var.aft_vpc_private_subnet_02_cidr
-  aft_vpc_public_subnet_01_cidr               = var.aft_vpc_public_subnet_01_cidr
-  aft_vpc_public_subnet_02_cidr               = var.aft_vpc_public_subnet_02_cidr
+  aft_vpc_private_subnet_03_cidr              = var.aft_vpc_private_subnet_03_cidr
+  # aft_vpc_public_subnet_01_cidr               = var.aft_vpc_public_subnet_01_cidr
+  # aft_vpc_public_subnet_02_cidr               = var.aft_vpc_public_subnet_02_cidr
   aft_vpc_endpoints                           = var.aft_vpc_endpoints
   concurrent_account_factory_actions          = var.concurrent_account_factory_actions
   request_framework_archive_path              = module.packaging.request_framework_archive_path

@@ -42,16 +42,16 @@ data "aws_route_tables" "aft_private_route_tables" {
   }
 }
 
-data "aws_route_tables" "aft_public_route_tables" {
-  count = local.vpc_deployment && var.aft_vpc_endpoints ? 1 : 0
+# data "aws_route_tables" "aft_public_route_tables" {
+#   count = local.vpc_deployment && var.aft_vpc_endpoints ? 1 : 0
 
-  vpc_id = local.vpc_id
+#   vpc_id = local.vpc_id
 
-  filter {
-    name   = "association.subnet-id"
-    values = local.vpc_public_subnet_ids
-  }
-}
+#   filter {
+#     name   = "association.subnet-id"
+#     values = local.vpc_public_subnet_ids
+#   }
+# }
 
 ######################################
 # VPC Endpoints
