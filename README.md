@@ -214,3 +214,5 @@ As of version 1.6.0, AFT collects anonymous operational metrics to help AWS impr
 <!-- END_TF_DOCS -->
 
 Updating to version 1.15.1
+
+updated the brannch also
