@@ -9,7 +9,7 @@ locals {
   # vpc_public_route_table_ids  = local.vpc_deployment ? try(data.aws_route_tables.aft_public_route_tables[0].ids, []) : []
   vpc_route_table_ids         = local.vpc_private_route_table_ids
 
-  vpc_private_subnet_ids = var.aft_enable_vpc || var.aft_customer_vpc_id != null ? concat(try(tolist([aws_subnet.aft_vpc_private_subnet_01[0].id, aws_subnet.aft_vpc_private_subnet_02[0].id]), []), var.aft_customer_private_subnets) : []
+  vpc_private_subnet_ids = var.aft_enable_vpc || var.aft_customer_vpc_id != null ? concat(try(tolist([aws_subnet.aft_vpc_private_subnet_01[0].id, aws_subnet.aft_vpc_private_subnet_02[0].id,aws_subnet.aft_vpc_private_subnet_03[0].id]), []), var.aft_customer_private_subnets) : []
   # public subnets are only applicable when AFT deploys the VPC
   # vpc_public_subnet_ids = var.aft_enable_vpc && var.aft_customer_vpc_id == null ? tolist([aws_subnet.aft_vpc_public_subnet_01[0].id, aws_subnet.aft_vpc_public_subnet_02[0].id]) : []
 
