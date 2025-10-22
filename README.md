@@ -212,3 +212,5 @@ As of version 1.6.0, AFT collects anonymous operational metrics to help AWS impr
 | <a name="output_tf_backend_secondary_region"></a> [tf\_backend\_secondary\_region](#output\_tf\_backend\_secondary\_region) | n/a |
 | <a name="output_vcs_provider"></a> [vcs\_provider](#output\_vcs\_provider) | n/a |
 <!-- END_TF_DOCS -->
+
+Updating to version 1.15.1
