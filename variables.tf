@@ -423,8 +423,8 @@ variable "aft_vpc_private_subnet_03_cidr" {
   description = "CIDR Block to allocate to the Private Subnet 023"
   default     = "10.133.48.128/27"
   validation {
-    condition     = can(regex("^([0-9]{1,3}\\.){3}[0-9]{1,3}(\\/([0-9]|[1-2][0-9]|3[0-2]))?$", var.aft_vpc_private_subnet_02_cidr))
-    error_message = "Variable var: aft_vpc_private_subnet_02_cidr value must be a valid network CIDR, x.x.x.x/y."
+    condition     = can(regex("^([0-9]{1,3}\\.){3}[0-9]{1,3}(\\/([0-9]|[1-2][0-9]|3[0-2]))?$", var.aft_vpc_private_subnet_03_cidr))
+    error_message = "Variable var: aft_vpc_private_subnet_03_cidr value must be a valid network CIDR, x.x.x.x/y."
   }
 }
 
